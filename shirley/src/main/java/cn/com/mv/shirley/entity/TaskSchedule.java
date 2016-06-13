@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -11,7 +13,9 @@ import javax.persistence.Table;
 public class TaskSchedule implements Serializable {
 	
 	private static final long serialVersionUID = -1936782649639323732L;
-
+	
+	@Id
+	@GeneratedValue
 	private Long id;
 	
 	private Long taskId;

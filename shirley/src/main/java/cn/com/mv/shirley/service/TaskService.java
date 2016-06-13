@@ -1,6 +1,6 @@
 package cn.com.mv.shirley.service;
 
-import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +11,7 @@ import cn.com.mv.shirley.entity.Task;
 import cn.com.mv.shirley.entity.TaskExecutor;
 import cn.com.mv.shirley.entity.TaskSchedule;
 import cn.com.mv.shirley.persistence.TaskDao;
+import cn.com.mv.shirley.persistence.TaskDaoExt;
 import cn.com.mv.shirley.persistence.TaskExecutorDao;
 import cn.com.mv.shirley.persistence.TaskScheduleDao;
 
@@ -26,6 +27,8 @@ public class TaskService {
 	@Autowired
 	private TaskExecutorDao taskExecutorDao;
 	
+	@Autowired
+	private TaskDaoExt taskDaoExt;
 	
 	@Transactional
 	public void addWithSchedule(Task task, TaskSchedule schedule, Long workerId) {
@@ -51,6 +54,8 @@ public class TaskService {
 		taskExecutorDao.deleteByTaskId(taskId);
 	}
 	
-	
+	public List<Task> queryAll() {
+		return taskDaoExt.queryAll();
+	}
 	
 }

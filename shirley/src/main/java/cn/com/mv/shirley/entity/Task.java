@@ -7,14 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="t_sh_task")
-@NamedNativeQuery(name="Task.queryAll",
-	query="select * from t_sh_task t,t_sh_task_schedule s where t.id = s.task_id",
-	resultClass=Task.class
-)
+
 public class Task implements Serializable {
 	
 	private static final long serialVersionUID = 3424235333732209929L;
@@ -35,6 +33,7 @@ public class Task implements Serializable {
 	
 	private Date updateTime =  new Date();
 	
+	@OneToOne
 	private TaskSchedule taskSchedule;
 
 	public Long getId() {

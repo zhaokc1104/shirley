@@ -8,6 +8,8 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +25,13 @@ import cn.com.mv.shirley.service.TaskService;
 @RequestMapping(value="/api/task")
 public class TaskFacade {
 	
-	private static final SimpleDateFormat timeFmt = new SimpleDateFormat("yyyy-MM-dd HH:mi:ss");
+	private static final SimpleDateFormat timeFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
+	private static final Logger LOG = LoggerFactory.getLogger(TaskFacade.class);
 	@Autowired
 	private TaskService taskService;
 	
+	@Autowired
 	private TaskScheduleService taskScheduleService;
 	
 	@RequestMapping(value="/addWithSchedule")
@@ -69,14 +73,8 @@ public class TaskFacade {
 			taskService.addWithSchedule(task, taskSchedule, workerId);
 			
 			WebUtil.responseJson(response, "success", jsonpCallback);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			LOG.error("addTaskWithSchedule Failed", e);
 		}
 	}
 	
@@ -132,7 +130,7 @@ public class TaskFacade {
 	
 	@RequestMapping(value="/list")
 	public void list(HttpServletRequest request, HttpServletResponse response) {
-		
+		taskService.queryAll();
 	}
 	
 }
